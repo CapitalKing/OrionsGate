@@ -22,6 +22,7 @@ public class ShipMovement : MonoBehaviour {
 	float leftThrusterPower = 25;
 	float topThrusterPower = 25;
 	float bottomThrusterPower = 25;
+	float mouseLookThrusterPower = 1500;
 	/*--------------------------------------*/
 
 
@@ -32,11 +33,14 @@ public class ShipMovement : MonoBehaviour {
 
 	public ParticleSystem[] thrusterEmissionsRear = new ParticleSystem[2];
 
-	/*Used for tracking the ships rotation.*/
+	/*Used for tracking the ships rotation according to mouse look.*/
 	float x_rotation;
 	float y_rotation;
 	float z_rotation;
-	/*-------------------------------------*/
+	float rotationSpeed = 2;
+	int lookBuffer = 25;
+	bool mouseLookOn = true;
+	/*-------------------------------------------------------------*/
 
 	/*
 	 * Moves the ship forwards in world space.
@@ -119,11 +123,11 @@ public class ShipMovement : MonoBehaviour {
 		}
 
 		if(Input.GetKey("q")){
-			z_rotation += Time.deltaTime * 100;
+			gameObject.rigidbody.angularVelocity = new Vector3(0,0,1) * Time.deltaTime;
 		}
 
 		if(Input.GetKey("e")){
-			z_rotation -= Time.deltaTime * 100;
+			gameObject.rigidbody.angularVelocity = new Vector3(0,0,-1) * Time.deltaTime;
 
 		}
 
@@ -140,12 +144,35 @@ public class ShipMovement : MonoBehaviour {
 	/*
 	 * Once the ship updates back to it's origin this 
 	 * function updates all other objects in the scene
-	 * in the same direction the ship moved. 
+	 * in the same direction the ship moved except objects 
+	 * with the tag 'AttachedToShip'
 	 */
 	void UpdateObjects(Vector3 movementAmount){
 		foreach(GameObject g in AllGameObjects){
 			if(g.tag != "AttachedToShip"){
 				g.transform.position += movementAmount;
+			}
+		}
+	}
+
+	/*
+	 * Used to control how the ship looks towards the mouse.
+	 */
+	void ShipMouseLook(){
+		float xDif = Input.mousePosition.x - Screen.width / 2;
+		float yDif = Input.mousePosition.y - Screen.height / 2;
+		if(Vector2.Distance(new Vector2(Input.mousePosition.x, Input.mousePosition.y), new Vector2(Screen.width/2, Screen.height/2)) > lookBuffer){
+			if(xDif > lookBuffer){
+				x_rotation += xDif/mouseLookThrusterPower;
+			} else if(xDif < lookBuffer) {
+				x_rotation += xDif/mouseLookThrusterPower;
+			}
+			
+			
+			if(yDif > -lookBuffer){
+				y_rotation += -yDif/mouseLookThrusterPower;
+			} else if(yDif < lookBuffer) {
+				y_rotation += -yDif/mouseLookThrusterPower;
 			}
 		}
 	}
@@ -158,15 +185,14 @@ public class ShipMovement : MonoBehaviour {
 	
 
 	void FixedUpdate () {
-		x_rotation += Input.GetAxis("Mouse X");
-		y_rotation -= Input.GetAxis("Mouse Y");
-	
-
-		gameObject.transform.localEulerAngles = new Vector3 (y_rotation, x_rotation, z_rotation);
+		if(mouseLookOn){
+			ShipMouseLook ();
+		}
 
 		if(Vector3.Distance(gameObject.transform.position, ShipOrigin) > MaxDistanceFromOrigin){
 			UpdateObjects(ShipOrigin - gameObject.transform.position);
 		}
+		gameObject.transform.localEulerAngles = new Vector3 (y_rotation, x_rotation, z_rotation);
 
 		GetInput ();
 	}
