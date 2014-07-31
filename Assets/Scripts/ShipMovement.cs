@@ -1,8 +1,9 @@
 ﻿/*
  *-created on: 7-29-2014
  *-author: Caleb Gasser
- * This script will control the movement of all objects in the scene. It wont actually move the ship, 
- * but all other objects around it instead.
+ * This script will control the movement of the ship. Once moved MaxDistanceFromOrigin it will
+ * move the ship back to the ShipOrigin along with all the other objects in scene in the same
+ * direction at the same time.
  */
 
 using UnityEngine;
@@ -11,91 +12,87 @@ using System.Collections;
 public class ShipMovement : MonoBehaviour {
 
 	object[] AllGameObjects;
+	Vector3 ShipOrigin;
+	int MaxDistanceFromOrigin = 100;
 
-	/*Varibles used for tracking the ships rotation.*/
+	/*The power of each thruster on the ship*/
+	float rearThrusterPower = 25;
+	float frontThrusterPower = 25;
+	float rightThrusterPower = 25;
+	float leftThrusterPower = 25;
+	float topThrusterPower = 25;
+	float bottomThrusterPower = 25;
+	/*--------------------------------------*/
+
+
+	/*Used to control the dampening (slow down) of the ship*/
+	bool dampening = false;
+	float dragAmount = 1;
+	/*-----------------------------------------------------*/
+
+	public ParticleSystem[] thrusterEmissionsRear = new ParticleSystem[2];
+
+	/*Used for tracking the ships rotation.*/
 	float x_rotation;
 	float y_rotation;
 	float z_rotation;
-	/*----------------------------------------------*/
+	/*-------------------------------------*/
 
 	/*
-	 * Moves all gameobjects in scene opposite
-	 * of the ship's forward to give the illusion
-	 * the ship is moving forward.
+	 * Moves the ship forwards in world space.
 	 */
 	void MoveShipForward(){
-		foreach(GameObject g in AllGameObjects){
-			if(g != gameObject && g.tag != "MainCamera"){
-				g.transform.Translate(-gameObject.transform.forward);
-			}
-		}
+		gameObject.rigidbody.AddForce(gameObject.transform.forward * rearThrusterPower, ForceMode.Force);
+		EmmitRear ();
 	}
 
 	/*
-	 * Moves all gameobjects in scene opposite
-	 * of the ship's backwards to give the illusion
-	 * the ship is moving backwards.
+	 * Moves the ship backwards in world space.
 	 */
 	void MoveShipBackward(){
-		foreach(GameObject g in AllGameObjects){
-			if(g != gameObject && g.tag != "MainCamera"){
-				g.transform.Translate(gameObject.transform.forward);
-			}
-		}
+		gameObject.rigidbody.AddForce(-gameObject.transform.forward * frontThrusterPower, ForceMode.Force);
 	}
 
 	/*
-	 * Moves all gameobjects in scene opposite
-	 * of the ship's right to give the illusion
-	 * the ship is moving right.
+	 * Moves the ship to the right in world space.
 	 */
 	void MoveShipRight(){
-		foreach(GameObject g in AllGameObjects){
-			if(g != gameObject && g.tag != "MainCamera"){
-				g.transform.Translate(-gameObject.transform.right);
-			}
-		}
+		gameObject.rigidbody.AddForce(gameObject.transform.right * leftThrusterPower, ForceMode.Force);
 	}
 
 	/*
-	 * Moves all gameobjects in scene opposite
-	 * of the ship's left to give the illusion
-	 * the ship is moving left.
+	 * Moves the ship to the left in world space.
 	 */
 	void MoveShipLeft(){
-		foreach(GameObject g in AllGameObjects){
-			if(g != gameObject && g.tag != "MainCamera"){
-				g.transform.Translate(gameObject.transform.right);
-			}
-		}
+		gameObject.rigidbody.AddForce(-gameObject.transform.right * rightThrusterPower, ForceMode.Force);
 	}
 
 	/*
-	 * Moves all gameobjects in scene opposite
-	 * of the ship's us to give the illusion
-	 * the ship is moving up.
+	 * Moves the ship up in world space.
 	 */
 	void MoveShipUp(){
-		foreach(GameObject g in AllGameObjects){
-			if(g != gameObject && g.tag != "MainCamera"){
-				g.transform.Translate(-gameObject.transform.up);
-			}
+		gameObject.rigidbody.AddForce(gameObject.transform.up * bottomThrusterPower, ForceMode.Force);
+	}
+
+	/*
+	 * Moves the ship down in world space.
+	 */
+	void MoveShipDown(){
+		gameObject.rigidbody.AddForce(-gameObject.transform.up * topThrusterPower, ForceMode.Force);
+	}
+
+	/*
+	 * Plays all the thruster emissions under thrusterEmissionsRear
+	 */
+	void EmmitRear(){
+		foreach(ParticleSystem p in thrusterEmissionsRear){
+			p.Play();
 		}
 	}
 
 	/*
-	 * Moves all gameobjects in scene opposite
-	 * of the ship's down to give the illusion
-	 * the ship is moving down.
+	 * Gets the player control input. 
 	 */
-	void MoveShipDown(){
-		foreach(GameObject g in AllGameObjects){
-			if(g != gameObject && g.tag != "MainCamera"){
-				g.transform.Translate(gameObject.transform.up);
-			}
-		}
-	}
-
 	void GetInput(){
 		if(Input.GetKey("w")){
 			MoveShipForward();
@@ -129,24 +126,48 @@ public class ShipMovement : MonoBehaviour {
 			z_rotation -= Time.deltaTime * 100;
 
 		}
+
+		if(Input.GetKeyUp("x")){
+			dampening = !dampening;
+			if(dampening){
+				gameObject.rigidbody.drag = dragAmount;
+			} else {
+				gameObject.rigidbody.drag = 0;
+			}
+		}
+	}
+
+	/*
+	 * Once the ship updates back to it's origin this 
+	 * function updates all other objects in the scene
+	 * in the same direction the ship moved. 
+	 */
+	void UpdateObjects(Vector3 movementAmount){
+		foreach(GameObject g in AllGameObjects){
+			if(g.tag != "AttachedToShip"){
+				g.transform.position += movementAmount;
+			}
+		}
 	}
 
 	void Start () {
+		ShipOrigin = new Vector3(0,0,0);
 		AllGameObjects = GameObject.FindObjectsOfType (typeof(GameObject));
-		foreach(GameObject g in AllGameObjects){
-			if(g != gameObject && g.GetType() != typeof(Camera)){
-				Debug.Log(g.name);
-			}
-		}
+		Screen.showCursor = false;
 	}
 	
 
 	void FixedUpdate () {
 		x_rotation += Input.GetAxis("Mouse X");
 		y_rotation -= Input.GetAxis("Mouse Y");
+	
 
 		gameObject.transform.localEulerAngles = new Vector3 (y_rotation, x_rotation, z_rotation);
-		Debug.Log ("X rotation: " + x_rotation + "\n" + "Y rotation: " + y_rotation);
+
+		if(Vector3.Distance(gameObject.transform.position, ShipOrigin) > MaxDistanceFromOrigin){
+			UpdateObjects(ShipOrigin - gameObject.transform.position);
+		}
+
 		GetInput ();
 	}
 }
