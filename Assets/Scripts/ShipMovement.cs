@@ -16,13 +16,14 @@ public class ShipMovement : MonoBehaviour {
 	int MaxDistanceFromOrigin = 100;
 
 	/*The power of each thruster on the ship*/
-	float rearThrusterPower = 25;
-	float frontThrusterPower = 25;
-	float rightThrusterPower = 25;
-	float leftThrusterPower = 25;
-	float topThrusterPower = 25;
-	float bottomThrusterPower = 25;
-	float mouseLookThrusterPower = 1500;
+	public float rearThrusterPower = 25;
+	public float frontThrusterPower = 25;
+	public float rightThrusterPower = 25;
+	public float leftThrusterPower = 25;
+	public float topThrusterPower = 25;
+	public float bottomThrusterPower = 25;
+	public float warp = 100000;
+	public float mouseLookThrusterPower = 1500;
 	/*--------------------------------------*/
 
 
@@ -37,7 +38,7 @@ public class ShipMovement : MonoBehaviour {
 	float x_rotation;
 	float y_rotation;
 	float z_rotation;
-	float rotationSpeed = 2;
+	public float rotationSpeed = 2;
 	int lookBuffer = 25;
 	bool mouseLookOn = true;
 	/*-------------------------------------------------------------*/
@@ -84,7 +85,10 @@ public class ShipMovement : MonoBehaviour {
 	void MoveShipDown(){
 		gameObject.rigidbody.AddForce(-gameObject.transform.up * topThrusterPower, ForceMode.Force);
 	}
-
+	void WarpDrive (){
+		transform.position += transform.forward * warp * Time.deltaTime;
+		EmmitRear ();
+		}
 	/*
 	 * Plays all the thruster emissions under thrusterEmissionsRear
 	 */
@@ -130,7 +134,10 @@ public class ShipMovement : MonoBehaviour {
 			gameObject.rigidbody.angularVelocity = new Vector3(0,0,-1) * Time.deltaTime;
 
 		}
+		if(Input.GetKey("t")){
+			WarpDrive();
 
+		}
 		if(Input.GetKeyUp("x")){
 			dampening = !dampening;
 			if(dampening){
@@ -140,6 +147,7 @@ public class ShipMovement : MonoBehaviour {
 			}
 		}
 	}
+
 
 	/*
 	 * Once the ship updates back to it's origin this 
