@@ -13,7 +13,7 @@ public class ShipMovement : MonoBehaviour {
 
 	object[] AllGameObjects;
 	Vector3 ShipOrigin;
-	int MaxDistanceFromOrigin = 100;
+	int MaxDistanceFromOrigin = 5000;
 
 	/*The power of each thruster on the ship*/
 	float rearThrusterPower = 25;
@@ -27,11 +27,12 @@ public class ShipMovement : MonoBehaviour {
 
 
 	/*Used to control the dampening (slow down) of the ship*/
-	bool dampening = false;
+	bool dampening = true;
 	float dragAmount = 1;
 	/*-----------------------------------------------------*/
 
 	public ParticleSystem[] thrusterEmissionsRear = new ParticleSystem[2];
+	SoundManager soundManager;
 
 	/*Used for tracking the ships rotation according to mouse look.*/
 	float x_rotation;
@@ -91,6 +92,21 @@ public class ShipMovement : MonoBehaviour {
 	void EmmitRear(){
 		foreach(ParticleSystem p in thrusterEmissionsRear){
 			p.Play();
+			if(!p.audio.isPlaying){
+				p.audio.Play();
+			} 
+
+		}
+	}
+
+	/*
+	 * Used to shutoff thruster sound effects.
+	 */
+	void StopThrusterSounds(){
+		foreach(ParticleSystem p in thrusterEmissionsRear){
+			if(p.audio.isPlaying){
+				p.audio.Stop();
+			} 
 		}
 	}
 
@@ -100,6 +116,8 @@ public class ShipMovement : MonoBehaviour {
 	void GetInput(){
 		if(Input.GetKey("w")){
 			MoveShipForward();
+		} else if(Input.GetKeyUp("w")){
+			StopThrusterSounds();
 		}
 
 		if(Input.GetKey("s")){
@@ -149,7 +167,7 @@ public class ShipMovement : MonoBehaviour {
 	 */
 	void UpdateObjects(Vector3 movementAmount){
 		foreach(GameObject g in AllGameObjects){
-			if(g.tag != "AttachedToShip"){
+			if(g.transform.root == g.transform){
 				g.transform.position += movementAmount;
 			}
 		}
@@ -180,11 +198,14 @@ public class ShipMovement : MonoBehaviour {
 	void Start () {
 		ShipOrigin = new Vector3(0,0,0);
 		AllGameObjects = GameObject.FindObjectsOfType (typeof(GameObject));
-		Screen.showCursor = false;
+		soundManager = gameObject.GetComponent<SoundManager> ();
 	}
 	
 
 	void FixedUpdate () {
+		if(Input.GetKey(KeyCode.Escape)){
+			Application.Quit();
+		}
 		if(mouseLookOn){
 			ShipMouseLook ();
 		}
