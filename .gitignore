@@ -1,6 +1,5 @@
 Library/*
 Temp/*
-Build/*
 *.csproj
 *.sln
 *.pidb
