@@ -8,6 +8,7 @@ using System.Collections;
 
 public class PlanetOrbit : MonoBehaviour {
 	public Transform sun;
+	public float OrbitSpeed = 1f;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,7 +16,7 @@ public class PlanetOrbit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.RotateAround (sun.position, Vector3.up, 0.1f * Time.deltaTime); 
+		transform.RotateAround (sun.position, Vector3.up, OrbitSpeed * Time.deltaTime); 
 		}
 }
 		                             
