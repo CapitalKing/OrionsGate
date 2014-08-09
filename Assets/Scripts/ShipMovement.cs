@@ -13,7 +13,7 @@ public class ShipMovement : MonoBehaviour {
 
 	object[] AllGameObjects;
 	Vector3 ShipOrigin;
-	int MaxDistanceFromOrigin = 100;
+	int MaxDistanceFromOrigin = 1000;
 
 	/*The power of each thruster on the ship*/
 	public float rearThrusterPower = 25;
@@ -22,17 +22,24 @@ public class ShipMovement : MonoBehaviour {
 	public float leftThrusterPower = 25;
 	public float topThrusterPower = 25;
 	public float bottomThrusterPower = 25;
-	public float warp = 100000;
+	public float warpSpeed = 100000;
 	public float mouseLookThrusterPower = 1500;
+	public float maxSpeed = 15000;
 	/*--------------------------------------*/
 
 
 	/*Used to control the dampening (slow down) of the ship*/
 	bool dampening = false;
 	float dragAmount = 1;
+	public UILabel dampersStatus;
 	/*-----------------------------------------------------*/
 
 	public ParticleSystem[] thrusterEmissionsRear = new ParticleSystem[2];
+	public ParticleSystem warpEffect;
+	public UILabel speedStatus;
+	public UILabel distanceStatus;
+	Vector3 distanceFromStart;
+
 
 	/*Used for tracking the ships rotation according to mouse look.*/
 	float x_rotation;
@@ -85,10 +92,13 @@ public class ShipMovement : MonoBehaviour {
 	void MoveShipDown(){
 		gameObject.rigidbody.AddForce(-gameObject.transform.up * topThrusterPower, ForceMode.Force);
 	}
+
 	void WarpDrive (){
-		transform.position += transform.forward * warp * Time.deltaTime;
-		EmmitRear ();
+		if(gameObject.rigidbody.velocity.magnitude < maxSpeed){
+			gameObject.rigidbody.AddForce(gameObject.transform.forward * warpSpeed * Time.deltaTime, ForceMode.Force);
 		}
+		EmmitRear ();
+	}
 	/*
 	 * Plays all the thruster emissions under thrusterEmissionsRear
 	 */
@@ -136,9 +146,17 @@ public class ShipMovement : MonoBehaviour {
 		}
 		if(Input.GetKey("t")){
 			WarpDrive();
+			warpEffect.Play();
 
+		} else if(Input.GetKeyUp("t")){
+			warpEffect.Stop();
+		}
+
+		if(Input.GetKeyUp("z")){
+			mouseLookOn = !mouseLookOn;
 		}
 		if(Input.GetKeyUp("x")){
+			Debug.Log("UP");
 			dampening = !dampening;
 			if(dampening){
 				gameObject.rigidbody.drag = dragAmount;
@@ -157,7 +175,7 @@ public class ShipMovement : MonoBehaviour {
 	 */
 	void UpdateObjects(Vector3 movementAmount){
 		foreach(GameObject g in AllGameObjects){
-			if(g.tag != "AttachedToShip"){
+			if(g.transform.root == g.transform){
 				g.transform.position += movementAmount;
 			}
 		}
@@ -185,12 +203,28 @@ public class ShipMovement : MonoBehaviour {
 		}
 	}
 
+	void Output(){
+		if(dampening){
+			dampersStatus.text = "Inertial Dampeners: On";
+		}else{
+			dampersStatus.text = "Inertial Dampeners: Off";
+		}
+		distanceStatus.text = "X: " + (distanceFromStart.x + Vector3.Distance(gameObject.transform.position, ShipOrigin)).ToString("F2") +
+			" Y: " + (distanceFromStart.y + Vector3.Distance(gameObject.transform.position, ShipOrigin)).ToString("F2") +
+				" Z: " + (distanceFromStart.z + Vector3.Distance(gameObject.transform.position, ShipOrigin)).ToString("F2");
+		speedStatus.text = "Speed (m/s): " + gameObject.rigidbody.velocity.magnitude.ToString("F2");
+	}
+
 	void Start () {
 		ShipOrigin = new Vector3(0,0,0);
 		AllGameObjects = GameObject.FindObjectsOfType (typeof(GameObject));
 		Screen.showCursor = false;
 	}
 	
+	void Update(){
+		GetInput ();
+		Output ();
+	}
 
 	void FixedUpdate () {
 		if(mouseLookOn){
@@ -198,10 +232,10 @@ public class ShipMovement : MonoBehaviour {
 		}
 
 		if(Vector3.Distance(gameObject.transform.position, ShipOrigin) > MaxDistanceFromOrigin){
+			distanceFromStart += gameObject.transform.position;
+			AllGameObjects = GameObject.FindObjectsOfType(typeof(GameObject));
 			UpdateObjects(ShipOrigin - gameObject.transform.position);
 		}
 		gameObject.transform.localEulerAngles = new Vector3 (y_rotation, x_rotation, z_rotation);
-
-		GetInput ();
 	}
 }

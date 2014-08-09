@@ -16,7 +16,7 @@ public class PlanetOrbit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.RotateAround (sun.position, Vector3.up, OrbitSpeed * Time.deltaTime); 
-		}
+		//transform.RotateAround (sun.position, Vector3.up, OrbitSpeed * Time.deltaTime); 
+	}
 }
 		                             
