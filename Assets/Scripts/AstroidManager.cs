@@ -6,7 +6,7 @@ public class AstroidManager : MonoBehaviour {
 	float maxDistance = 2500;
 	float minDistance = -2500;
 
-	int maxAmount = 200;
+	int maxAmount = 100;
 
 	GameObject[] astroids;
 	public GameObject astroid;

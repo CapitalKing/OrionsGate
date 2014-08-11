@@ -44,13 +44,13 @@ MonoBehaviour:
   - name: Debug_0
     outer:
       serializedVersion: 2
-      x: 515
+      x: 641
       y: 827
       width: 255
       height: 197
     inner:
       serializedVersion: 2
-      x: 515
+      x: 641
       y: 827
       width: 255
       height: 197
@@ -63,13 +63,13 @@ MonoBehaviour:
     outer:
       serializedVersion: 2
       x: 0
-      y: 651
+      y: 171
       width: 514
       height: 373
     inner:
       serializedVersion: 2
       x: 0
-      y: 651
+      y: 171
       width: 514
       height: 373
     rotated: 0
@@ -77,6 +77,42 @@ MonoBehaviour:
     paddingRight: .122568093
     paddingTop: .040214479
     paddingBottom: .0321715809
+  - name: Button001
+    outer:
+      serializedVersion: 2
+      x: 0
+      y: 545
+      width: 640
+      height: 479
+    inner:
+      serializedVersion: 2
+      x: 0
+      y: 545
+      width: 630
+      height: 479
+    rotated: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: CrossHair002
+    outer:
+      serializedVersion: 2
+      x: 897
+      y: 986
+      width: 38
+      height: 38
+    inner:
+      serializedVersion: 2
+      x: 897
+      y: 986
+      width: 38
+      height: 38
+    rotated: 0
+    paddingLeft: .342105269
+    paddingRight: .342105269
+    paddingTop: .342105269
+    paddingBottom: .342105269
   mCoordinates: 0
   mPixelSize: 1
   mReplacement: {fileID: 0}
