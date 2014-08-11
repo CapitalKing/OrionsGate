@@ -3,10 +3,10 @@ using System.Collections;
 
 public class AstroidManager : MonoBehaviour {
 
-	float maxDistance = 2500;
-	float minDistance = -2500;
+	float maxDistance = 5000;
+	float minDistance = -5000;
 
-	int maxAmount = 100;
+	int maxAmount = 1000;
 
 	GameObject[] astroids;
 	public GameObject astroid;

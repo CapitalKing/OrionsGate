@@ -18,6 +18,10 @@ public class AstroidBehaviour : MonoBehaviour {
 		}
 	}
 
+	public float GetHealth(){
+		return health;
+	}
+
 	void RandomVelocity(){
 		float velX = Random.Range (-50,50);
 		float velY = Random.Range (-50,50);

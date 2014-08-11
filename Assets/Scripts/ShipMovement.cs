@@ -31,13 +31,14 @@ public class ShipMovement : MonoBehaviour {
 	/*Used to control the dampening (slow down) of the ship*/
 	bool dampening = false;
 	float dragAmount = 1;
-	public UILabel dampersStatus;
 	/*-----------------------------------------------------*/
+
+	public UILabel dampersStatus;
+	public UILabel speedStatus;
+	public UILabel distanceStatus;
 
 	public ParticleSystem[] thrusterEmissionsRear = new ParticleSystem[2];
 	public ParticleSystem warpEffect;
-	public UILabel speedStatus;
-	public UILabel distanceStatus;
 	Vector3 distanceFromStart;
 
 

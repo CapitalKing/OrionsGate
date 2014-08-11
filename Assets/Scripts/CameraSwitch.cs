@@ -15,6 +15,12 @@ public class CameraSwitch : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+
+	public void SwitchCamera(){
+		first.enabled = !first.enabled;
+		third.enabled = !third.enabled;
+	}
+
 	void Update () {
 	if (Input.GetKeyUp (KeyCode.F)) {
 			first.enabled = !first.enabled;

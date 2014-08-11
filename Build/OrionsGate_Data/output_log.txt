@@ -13,32 +13,18 @@ Platform assembly: D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assemb
 Loading D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
 Loading D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-- Completed reload, in  0.135 seconds
+- Completed reload, in  0.088 seconds
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\System.dll (this message is harmless)
-UnloadTime: 7.172615 ms
+UnloadTime: 7.275252 ms
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 390.
-Total: 6.461426 ms (FindLiveObjects: 0.044476 ms CreateObjectMapping: 0.022665 ms MarkObjects: 0.410548 ms  DeleteObjects: 4.973190 ms)
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 418.
+Total: 7.125146 ms (FindLiveObjects: 0.056878 ms CreateObjectMapping: 0.028652 ms MarkObjects: 0.537133 ms  DeleteObjects: 5.680958 ms)
 
 UP
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-UP
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-UP
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-HandleD3DDeviceLost
-  HandleD3DDeviceLost: needs reset, doing it
-FullResetD3DDevice
-ResetD3DDevice
-dev->Reset
-D3Dwindow device not lost anymore
