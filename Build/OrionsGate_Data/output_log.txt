@@ -13,16 +13,16 @@ Platform assembly: D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assemb
 Loading D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
 Loading D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-- Completed reload, in  0.088 seconds
+- Completed reload, in  0.109 seconds
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: D:\Documents\Orions Gate\Build\OrionsGate_Data\Managed\System.dll (this message is harmless)
-UnloadTime: 7.275252 ms
+UnloadTime: 7.132416 ms
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
 Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 418.
-Total: 7.125146 ms (FindLiveObjects: 0.056878 ms CreateObjectMapping: 0.028652 ms MarkObjects: 0.537133 ms  DeleteObjects: 5.680958 ms)
+Total: 7.080242 ms (FindLiveObjects: 0.050890 ms CreateObjectMapping: 0.029508 ms MarkObjects: 0.557661 ms  DeleteObjects: 5.643752 ms)
 
 UP
  

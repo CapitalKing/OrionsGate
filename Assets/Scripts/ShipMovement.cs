@@ -40,6 +40,7 @@ public class ShipMovement : MonoBehaviour {
 	public ParticleSystem[] thrusterEmissionsRear = new ParticleSystem[2];
 	public ParticleSystem warpEffect;
 	Vector3 distanceFromStart;
+	public Vector3 totalDistance;
 
 
 	/*Used for tracking the ships rotation according to mouse look.*/
@@ -210,9 +211,12 @@ public class ShipMovement : MonoBehaviour {
 		}else{
 			dampersStatus.text = "Inertial Dampeners: Off";
 		}
-		distanceStatus.text = "X: " + (distanceFromStart.x + Vector3.Distance(gameObject.transform.position, ShipOrigin)).ToString("F2") +
-			" Y: " + (distanceFromStart.y + Vector3.Distance(gameObject.transform.position, ShipOrigin)).ToString("F2") +
-				" Z: " + (distanceFromStart.z + Vector3.Distance(gameObject.transform.position, ShipOrigin)).ToString("F2");
+		totalDistance.x = distanceFromStart.x + Vector3.Distance (gameObject.transform.position, ShipOrigin);
+		totalDistance.y = distanceFromStart.y + Vector3.Distance (gameObject.transform.position, ShipOrigin);
+		totalDistance.z = distanceFromStart.z + Vector3.Distance (gameObject.transform.position, ShipOrigin);
+		distanceStatus.text = "X: " + totalDistance.x.ToString("F2") +
+			" Y: " + totalDistance.y.ToString("F2") +
+				" Z: " + totalDistance.z.ToString("F2");
 		speedStatus.text = "Speed (m/s): " + gameObject.rigidbody.velocity.magnitude.ToString("F2");
 	}
 
