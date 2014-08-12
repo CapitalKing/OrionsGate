@@ -6,6 +6,7 @@ public class AstroidBehaviour : MonoBehaviour {
 	// Use this for initialization
 	float scale;
 	public float health = 100;
+	public int OreCredit;
 	public GameObject explosion;
 
 	public void Damage(float d){
@@ -15,6 +16,7 @@ public class AstroidBehaviour : MonoBehaviour {
 			GameObject exp = (GameObject)Instantiate(explosion,gameObject.transform.position,gameObject.transform.rotation);
 			Destroy (exp,2);
 			Destroy(gameObject);
+			Economy.Credits += OreCredit;
 		}
 	}
 
@@ -32,6 +34,7 @@ public class AstroidBehaviour : MonoBehaviour {
 	void Start () {
 		scale = Random.Range(1f, 50f);
 		health *= scale;
+		OreCredit = Random.Range (100, 1000);
 		gameObject.transform.localScale *= scale;
 		RandomVelocity ();
 	}

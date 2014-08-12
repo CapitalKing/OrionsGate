@@ -3092,6 +3092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lazerHit: {fileID: 0}
+  targetStatus: {fileID: 0}
 --- !u!114 &940989911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3196,12 +3197,14 @@ MonoBehaviour:
   mouseLookThrusterPower: 500
   maxSpeed: 15000
   dampersStatus: {fileID: 0}
+  speedStatus: {fileID: 0}
+  distanceStatus: {fileID: 0}
+  creditAmount: {fileID: 0}
   thrusterEmissionsRear:
   - {fileID: 1153832972}
   - {fileID: 923272167}
   warpEffect: {fileID: 0}
-  speedStatus: {fileID: 0}
-  distanceStatus: {fileID: 0}
+  totalDistance: {x: 0, y: 0, z: 0}
   rotationSpeed: 10
 --- !u!95 &961808178
 Animator:
@@ -3289,7 +3292,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 995570294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -914.588074, y: .931352437, z: 0}
+  m_LocalPosition: {x: -320.499969, y: .5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1674272952}
@@ -4408,6 +4411,7 @@ GameObject:
   - 114: {fileID: 1188217104}
   - 114: {fileID: 1188217103}
   - 114: {fileID: 1188217102}
+  - 114: {fileID: 1188217107}
   m_Layer: 5
   m_Name: Button Quit
   m_TagString: Untagged
@@ -4502,6 +4506,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 500, y: 40, z: 0}
   m_Center: {x: 0, y: 0, z: -.5}
+--- !u!114 &1188217107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1188217100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53aae71bde4a07409cbde979a23a381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1331341932
 GameObject:
   m_ObjectHideFlags: 0
@@ -5797,7 +5812,7 @@ Transform:
   m_GameObject: {fileID: 1638682147}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .00409836043, y: .00409836043, z: .00409836043}
+  m_LocalScale: {x: .00416666688, y: .00416666688, z: .00416666688}
   m_Children:
   - {fileID: 1665514832}
   m_Father: {fileID: 0}
@@ -6101,17 +6116,17 @@ MonoBehaviour:
   widgetsAreStatic: 0
   cullWhileDragging: 0
   worldToLocal:
-    e00: 244.000015
+    e00: 239.999985
     e01: 0
     e02: 0
-    e03: 914.588074
+    e03: 320.499969
     e10: 0
-    e11: 244.000015
+    e11: 239.999985
     e12: 0
-    e13: -.931352437
+    e13: -.5
     e20: 0
     e21: 0
-    e22: 244.000015
+    e22: 239.999985
     e23: 0
     e30: 0
     e31: 0

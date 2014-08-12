@@ -31,6 +31,7 @@ public class ShipBehaviour : MonoBehaviour {
 				Destroy(gameObject.GetComponent<Rigidbody>());
 				GameObject exp = (GameObject)Instantiate(explosion,gameObject.transform.position,gameObject.transform.rotation);
 				isAlive = false;
+				hullCurrentIntegrity = 0;
 			}	
 		}
 		hullStatus.text = "Hull Integrity: " + ((hullCurrentIntegrity/hullTotalIntegrity) * 100).ToString("F0") + "%";
