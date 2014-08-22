@@ -50,7 +50,7 @@ public class WeaponLazer : MonoBehaviour {
 	void DisplayTarget(){
 		RaycastHit hit = new RaycastHit ();
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		if(Physics.Raycast (ray, out hit, 100000)){
+		if(Physics.Raycast (ray, out hit, 1000000)){
 			if(hit.collider.tag == "Asteroid"){
 				targetStatus.text = "Target Integrity: " + hit.collider.GetComponent<AstroidBehaviour>().GetHealth().ToString("F0");
 			} else {

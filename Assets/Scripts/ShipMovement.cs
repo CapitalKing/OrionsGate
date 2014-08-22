@@ -36,6 +36,7 @@ public class ShipMovement : MonoBehaviour {
 	public UILabel dampersStatus;
 	public UILabel speedStatus;
 	public UILabel distanceStatus;
+	public UILabel creditAmount;
 
 	public ParticleSystem[] thrusterEmissionsRear = new ParticleSystem[2];
 	public ParticleSystem warpEffect;
@@ -218,6 +219,7 @@ public class ShipMovement : MonoBehaviour {
 			" Y: " + totalDistance.y.ToString("F2") +
 				" Z: " + totalDistance.z.ToString("F2");
 		speedStatus.text = "Speed (m/s): " + gameObject.rigidbody.velocity.magnitude.ToString("F2");
+		creditAmount.text = "Credits: " + Economy.Credits;
 	}
 
 	void Start () {
